@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Trending - 2026年03月11日</title>
+    <title>GitHub 热门项目 - 2026年03月11日</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #e2e8f0;
             min-height: 100vh;
@@ -39,6 +39,12 @@
             font-size: 1.15em;
             letter-spacing: 0.5px;
         }
+        .subtitle {
+            color: #64748b;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
         .repo {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
@@ -57,54 +63,109 @@
         .repo-header {
             display: flex;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .rank {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.3em;
             margin-right: 16px;
             color: #0f172a;
+            flex-shrink: 0;
+        }
+        .repo-title {
+            flex: 1;
+            min-width: 0;
         }
         .repo-name {
             font-size: 1.35em;
             font-weight: 600;
+            margin-bottom: 4px;
         }
         .repo-name a {
             color: #60a5fa;
             text-decoration: none;
             transition: color 0.2s;
+            word-break: break-all;
         }
         .repo-name a:hover {
             color: #93c5fd;
             text-decoration: underline;
         }
-        .repo-desc {
-            color: #cbd5e1;
-            line-height: 1.7;
-            margin-bottom: 16px;
-            font-size: 0.95em;
-        }
-        .repo-meta {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            font-size: 0.9em;
-        }
-        .meta-item {
+        .repo-owner {
+            color: #64748b;
+            font-size: 0.85em;
             display: flex;
             align-items: center;
             gap: 6px;
         }
+        .repo-owner img {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+        .repo-desc {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 14px;
+            font-size: 0.95em;
+        }
+        .repo-desc-zh {
+            color: #94a3b8;
+            font-size: 0.88em;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            padding-left: 12px;
+            border-left: 3px solid rgba(251, 191, 36, 0.5);
+        }
+        .repo-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+        }
         .stars { color: #fbbf24; }
         .lang { color: #a78bfa; }
         .forks { color: #94a3b8; }
+        .license { color: #34d399; }
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .topic {
+            padding: 4px 12px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8em;
+            color: #64748b;
+        }
         .nav {
             display: flex;
             justify-content: center;
@@ -113,12 +174,12 @@
             flex-wrap: wrap;
         }
         .nav a {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: rgba(255,255,255,0.05);
-            border-radius: 10px;
+            border-radius: 12px;
             color: #94a3b8;
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 0.95em;
             transition: all 0.2s;
             border: 1px solid rgba(255,255,255,0.1);
         }
@@ -145,156 +206,295 @@
         @media (max-width: 600px) {
             h1 { font-size: 2em; }
             .repo { padding: 20px; }
-            .rank { width: 36px; height: 36px; font-size: 1em; }
+            .rank { width: 40px; height: 40px; font-size: 1.1em; }
+            .repo-name { font-size: 1.15em; }
+            .repo-meta { gap: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🔥 GitHub Trending</h1>
-            <div class="date">2026年03月11日 · 今日热门 Top 10</div>
+            <h1>🔥 GitHub 热门项目</h1>
+            <div class="date">2026年03月11日 · 今日新星 Top 10</div>
+            <div class="subtitle">
+                自动追踪 GitHub 上最近一周最受欢迎的开源项目<br>
+                发现前沿技术、创新工具和优秀的代码实践
+            </div>
         </header>
         
         <div class="nav">
-            <a href="index.html" class="active">今日</a>
-            <a href="history.html">历史</a>
-            <a href="https://github.com/user/repo" target="_blank">GitHub →</a>
+            <a href="index.html" class="active">📊 今日榜单</a>
+            <a href="history.html">📚 历史归档</a>
+            <a href="https://github.com/user/repo" target="_blank">⚙️ 仓库设置</a>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">1</div>
-                <div class="repo-name"><a href="https://github.com/karpathy/autoresearch" target="_blank">karpathy/autoresearch</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/karpathy/autoresearch" target="_blank">karpathy/autoresearch</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/241138?v=4' alt=''>
+                        karpathy · 创建于 2026年03月06日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">AI agents running research on single-GPU nanochat training automatically</div>
+            <div class="repo-desc-zh">💡 相关技术：人工智能、增强现实、C</div>
+            
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 24,212</div>
+                <div class="meta-item stars">⭐ 24,404</div>
                 <div class="meta-item lang">🟣 Python</div>
-                <div class="meta-item forks">🍴 3,082</div>
+                <div class="meta-item forks">🍴 3,097</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月11日</span>
+                <span>🔗 <a href="https://github.com/karpathy/autoresearch" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">2</div>
-                <div class="repo-name"><a href="https://github.com/HKUDS/CLI-Anything" target="_blank">HKUDS/CLI-Anything</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/HKUDS/CLI-Anything" target="_blank">HKUDS/CLI-Anything</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/118165258?v=4' alt=''>
+                        HKUDS · 创建于 2026年03月08日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">CLI-Anything: Making ALL Software Agent-Native</div>
+            <div class="repo-desc-zh">💡 相关技术：命令行工具、增强现实、C</div>
+            
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 3,542</div>
+                <div class="meta-item stars">⭐ 3,692</div>
                 <div class="meta-item lang">🟣 Python</div>
-                <div class="meta-item forks">🍴 337</div>
+                <div class="meta-item forks">🍴 352</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月10日</span>
+                <span>🔗 <a href="https://github.com/HKUDS/CLI-Anything" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">3</div>
-                <div class="repo-name"><a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">twostraws/SwiftUI-Agent-Skill</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">twostraws/SwiftUI-Agent-Skill</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/190200?v=4' alt=''>
+                        twostraws · 创建于 2026年03月05日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">SwiftUI agent skill for Claude Code, Codex, and other AI tools.</div>
+            <div class="repo-desc-zh">💡 相关技术：人工智能、工具、用户界面</div>
+            
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,765</div>
-                <div class="meta-item lang">🟣 未知</div>
+                <div class="meta-item stars">⭐ 1,772</div>
+                <div class="meta-item lang">🟣 未标注</div>
                 <div class="meta-item forks">🍴 58</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月05日</span>
+                <span>🔗 <a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">4</div>
-                <div class="repo-name"><a href="https://github.com/jackwener/twitter-cli" target="_blank">jackwener/twitter-cli</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/jackwener/twitter-cli" target="_blank">jackwener/twitter-cli</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/30525741?v=4' alt=''>
+                        jackwener · 创建于 2026年03月05日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">A CLI for Twitter/X — feed, bookmarks, and user timeline in terminal</div>
+            <div class="repo-desc-zh">💡 相关技术：命令行工具、用户、终端</div>
+            
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,550</div>
+                <div class="meta-item stars">⭐ 1,559</div>
                 <div class="meta-item lang">🟣 Python</div>
-                <div class="meta-item forks">🍴 133</div>
+                <div class="meta-item forks">🍴 136</div>
+                <div class="meta-item license">📄 Apache 2.0</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月11日</span>
+                <span>🔗 <a href="https://github.com/jackwener/twitter-cli" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">5</div>
-                <div class="repo-name"><a href="https://github.com/BigBodyCobain/Shadowbroker" target="_blank">BigBodyCobain/Shadowbroker</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/tanweai/pua" target="_blank">tanweai/pua</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/256783335?v=4' alt=''>
+                        tanweai · 创建于 2026年03月08日
+                    </div>
+                </div>
             </div>
-            <div class="repo-desc">Open-source intelligence for the global theater. Track everything from the corporate/private jets of the wealthy, and spy satellites, to seismic events in one unified interface. The knowledge is available to all but rarely aggregated in the open, until now.</div>
+            <div class="repo-desc">你是一个曾经被寄予厚望的 P8 级工程师。Anthropic 当初给你定级的时候，对你的期望是很高的。</div>
+            <div class="repo-desc-zh">💡 相关技术：C、R</div>
+            
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,467</div>
+                <div class="meta-item stars">⭐ 1,532</div>
                 <div class="meta-item lang">🟣 TypeScript</div>
-                <div class="meta-item forks">🍴 164</div>
+                <div class="meta-item forks">🍴 55</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月11日</span>
+                <span>🔗 <a href="https://github.com/tanweai/pua" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">6</div>
-                <div class="repo-name"><a href="https://github.com/cyxzdev/Uncodixfy" target="_blank">cyxzdev/Uncodixfy</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/BigBodyCobain/Shadowbroker" target="_blank">BigBodyCobain/Shadowbroker</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/43977454?v=4' alt=''>
+                        BigBodyCobain · 创建于 2026年03月05日
+                    </div>
+                </div>
             </div>
-            <div class="repo-desc">the holly uncodexify instructions - letting GPT create uncodexified UI</div>
+            <div class="repo-desc">Open-source intelligence for the global theater. Track everything from the corporate/private jets of the wealthy, and spy satellites, to seismic events in one unified interface. The knowledge is available to all but rarely aggregated in the open, until now.</div>
+            <div class="repo-desc-zh">💡 相关技术：人工智能、事件、增强现实</div>
+            <div class="topics"><span class="topic">osint</span><span class="topic">osint-resources</span><span class="topic">osint-tool</span><span class="topic">osint-tools</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,383</div>
-                <div class="meta-item lang">🟣 未知</div>
-                <div class="meta-item forks">🍴 106</div>
+                <div class="meta-item stars">⭐ 1,474</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 164</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月11日</span>
+                <span>🔗 <a href="https://github.com/BigBodyCobain/Shadowbroker" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">7</div>
-                <div class="repo-name"><a href="https://github.com/tanweai/pua" target="_blank">tanweai/pua</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/cyxzdev/Uncodixfy" target="_blank">cyxzdev/Uncodixfy</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/228589244?v=4' alt=''>
+                        cyxzdev · 创建于 2026年03月06日
+                    </div>
+                </div>
             </div>
-            <div class="repo-desc">你是一个曾经被寄予厚望的 P8 级工程师。Anthropic 当初给你定级的时候，对你的期望是很高的。</div>
+            <div class="repo-desc">the holly uncodexify instructions - letting GPT create uncodexified UI</div>
+            <div class="repo-desc-zh">💡 相关技术：用户界面、C、R</div>
+            
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,338</div>
-                <div class="meta-item lang">🟣 TypeScript</div>
-                <div class="meta-item forks">🍴 44</div>
+                <div class="meta-item stars">⭐ 1,383</div>
+                <div class="meta-item lang">🟣 未标注</div>
+                <div class="meta-item forks">🍴 106</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月10日</span>
+                <span>🔗 <a href="https://github.com/cyxzdev/Uncodixfy" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">8</div>
-                <div class="repo-name"><a href="https://github.com/ParthJadhav/app-store-screenshots" target="_blank">ParthJadhav/app-store-screenshots</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/ParthJadhav/app-store-screenshots" target="_blank">ParthJadhav/app-store-screenshots</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/42001064?v=4' alt=''>
+                        ParthJadhav · 创建于 2026年03月07日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">end to end app store screenshot creation using AI</div>
+            <div class="repo-desc-zh">💡 相关技术：人工智能、应用、存储</div>
+            <div class="topics"><span class="topic">agentic-ai</span><span class="topic">apple</span><span class="topic">appstore</span><span class="topic">automate</span><span class="topic">claude</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,313</div>
-                <div class="meta-item lang">🟣 未知</div>
-                <div class="meta-item forks">🍴 82</div>
+                <div class="meta-item stars">⭐ 1,366</div>
+                <div class="meta-item lang">🟣 未标注</div>
+                <div class="meta-item forks">🍴 84</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月10日</span>
+                <span>🔗 <a href="https://github.com/ParthJadhav/app-store-screenshots" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">9</div>
-                <div class="repo-name"><a href="https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills" target="_blank">FreedomIntelligence/OpenClaw-Medical-Skills</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills" target="_blank">FreedomIntelligence/OpenClaw-Medical-Skills</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/127706844?v=4' alt=''>
+                        FreedomIntelligence · 创建于 2026年03月08日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">The largest open-source medical AI skills library for OpenClaw🦞.</div>
+            <div class="repo-desc-zh">💡 相关技术：人工智能、库、增强现实</div>
+            <div class="topics"><span class="topic">awesome</span><span class="topic">claude-code</span><span class="topic">clawhub</span><span class="topic">medical</span><span class="topic">nanoclaw</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 955</div>
+                <div class="meta-item stars">⭐ 963</div>
                 <div class="meta-item lang">🟣 Python</div>
                 <div class="meta-item forks">🍴 116</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月11日</span>
+                <span>🔗 <a href="https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">10</div>
-                <div class="repo-name"><a href="https://github.com/op7418/Claude-to-IM-skill" target="_blank">op7418/Claude-to-IM-skill</a></div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/op7418/Claude-to-IM-skill" target="_blank">op7418/Claude-to-IM-skill</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/13505770?v=4' alt=''>
+                        op7418 · 创建于 2026年03月05日
+                    </div>
+                </div>
             </div>
             <div class="repo-desc">Bridge Claude Code / Codex to IM platforms — chat with AI coding agents from Telegram, Discord, or Feishu/Lark.</div>
+            <div class="repo-desc-zh">💡 相关技术：人工智能、桥接、增强现实</div>
+            <div class="topics"><span class="topic">chatbot</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">discord</span><span class="topic">feishu</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 858</div>
+                <div class="meta-item stars">⭐ 859</div>
                 <div class="meta-item lang">🟣 TypeScript</div>
                 <div class="meta-item forks">🍴 110</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月09日</span>
+                <span>🔗 <a href="https://github.com/op7418/Claude-to-IM-skill" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
         <div class="footer">
-            <p>每日自动更新 · 由 GitHub Actions 生成</p>
-            <p style="margin-top: 10px; font-size: 0.85em;">Generated at 2026-03-11 15:56:56</p>
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                生成时间：2026年03月11日 16:51:21 · 
+                <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
+            </p>
         </div>
     </div>
 </body>
