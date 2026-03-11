@@ -2,19 +2,150 @@
 """
 GitHub Trending Daily Report Generator
 Generates HTML reports and deploys to GitHub Pages
-Enhanced version with Chinese descriptions and more details
+Enhanced version with AI-powered Chinese translations
 """
 
 import requests
 import json
 import os
+import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
 OUTPUT_DIR = Path("docs")
 DATA_DIR = Path("data")
+CACHE_FILE = DATA_DIR / "translation_cache.json"
 
-# 常见技术术语的中文映射（用于辅助理解）
+# Kimi API Configuration
+KIMI_API_KEY = os.environ.get("KIMI_API_KEY", "")
+KIMI_API_URL = "https://api.moonshot.cn/v1/chat/completions"
+
+def load_translation_cache():
+    """Load cached translations to avoid repeated API calls"""
+    if CACHE_FILE.exists():
+        try:
+            with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_translation_cache(cache):
+    """Save translation cache"""
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+def translate_description(repo_name, description, topics, language):
+    """
+    Translate project description to Chinese using Kimi API
+    Returns a rich Chinese summary
+    """
+    if not KIMI_API_KEY:
+        return None
+    
+    if not description:
+        desc = "未提供项目描述"
+    else:
+        desc = description
+    
+    # Build cache key
+    cache_key = f"{repo_name}:{hash(desc)}"
+    cache = load_translation_cache()
+    
+    if cache_key in cache:
+        print(f"  Using cached translation for {repo_name}")
+        return cache[cache_key]
+    
+    # Prepare prompt
+    topics_str = ", ".join(topics[:5]) if topics else "无"
+    lang_str = language or "未标注"
+    
+    prompt = f"""请将以下 GitHub 项目的英文描述翻译成自然流畅的中文，并补充项目亮点。
+
+项目名称：{repo_name}
+编程语言：{lang_str}
+标签：{topics_str}
+原始描述：{desc}
+
+请按以下格式输出：
+1. 一句话中文简介（简洁明了）
+2. 核心功能/亮点（2-3点，用•符号）
+3. 适用场景（1句话）
+
+输出示例格式：
+一句话简介：这是一个...
+核心亮点：
+• 支持xxx功能
+• 提供xxx能力
+适用场景：适合需要...的开发者"""
+
+    try:
+        resp = requests.post(
+            KIMI_API_URL,
+            headers={
+                "Authorization": f"Bearer {KIMI_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "moonshot-v1-8k",
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.7
+            },
+            timeout=30
+        )
+        resp.raise_for_status()
+        result = resp.json()
+        translation = result["choices"][0]["message"]["content"].strip()
+        
+        # Cache the result
+        cache[cache_key] = translation
+        save_translation_cache(cache)
+        
+        print(f"  Translated {repo_name}")
+        return translation
+        
+    except Exception as e:
+        print(f"  Translation failed for {repo_name}: {e}")
+        return None
+
+def parse_translation(translation_text):
+    """Parse the translation into structured HTML"""
+    if not translation_text:
+        return ""
+    
+    lines = translation_text.split('\n')
+    html_parts = []
+    
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        
+        # 一句话简介
+        if line.startswith('一句话简介：') or line.startswith('一句话介绍：'):
+            content = line.split('：', 1)[1] if '：' in line else line
+            html_parts.append(f'<div class="repo-summary">{content}</div>')
+        
+        # 核心亮点标题
+        elif line.startswith('核心亮点：') or line.startswith('核心功能：'):
+            html_parts.append('<div class="repo-highlights-title">✨ 核心亮点</div>')
+        
+        # 亮点列表项
+        elif line.startswith('•') or line.startswith('-') or line.startswith('*'):
+            content = line[1:].strip()
+            html_parts.append(f'<div class="repo-highlight-item">{content}</div>')
+        
+        # 适用场景
+        elif line.startswith('适用场景：') or line.startswith('适用人群：'):
+            content = line.split('：', 1)[1] if '：' in line else line
+            html_parts.append(f'<div class="repo-scene">🎯 {line}</div>')
+    
+    # If no structured format, treat as plain text
+    if not html_parts:
+        html_parts.append(f'<div class="repo-summary">{translation_text}</div>')
+    
+    return '\n'.join(html_parts)
+
 TECH_TERMS = {
     "ai": "人工智能",
     "artificial intelligence": "人工智能",
@@ -135,7 +266,6 @@ TECH_TERMS = {
     "observable": "可观察对象",
     "state management": "状态管理",
     "store": "存储",
-    "cache": "缓存",
     "session": "会话",
     "cookie": "Cookie",
     "jwt": "JWT 令牌",
@@ -189,7 +319,6 @@ TECH_TERMS = {
     "embedded": "嵌入式",
     "hardware": "硬件",
     "firmware": "固件",
-    "driver": "驱动",
     "kernel": "内核",
     "os": "操作系统",
     "linux": "Linux",
@@ -442,18 +571,15 @@ def get_tech_summary(description, topics, language):
     desc_lower = description.lower()
     matched_terms = []
     
-    # 匹配技术术语
     for term, chinese in TECH_TERMS.items():
         if term in desc_lower and chinese not in matched_terms:
             matched_terms.append(chinese)
     
-    # 限制数量
     matched_terms = matched_terms[:3]
     
     if matched_terms:
         return "相关技术：" + "、".join(matched_terms)
     
-    # 根据语言推断
     if language:
         lang_map = {
             "Python": "Python 项目",
@@ -578,7 +704,7 @@ def save_json(repos, date_str):
     print(f"Saved JSON to {filepath}")
 
 def generate_html(repos, date_str):
-    """Generate beautiful HTML report with enhanced details"""
+    """Generate beautiful HTML report with AI translations"""
     today_display = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y年%m月%d日")
     
     html = f"""<!DOCTYPE html>
@@ -694,24 +820,63 @@ def generate_html(repos, date_str):
             border-radius: 50%;
         }}
         .repo-desc {{
-            color: #cbd5e1;
-            line-height: 1.8;
-            margin-bottom: 14px;
-            font-size: 0.95em;
-        }}
-        .repo-desc-zh {{
             color: #94a3b8;
-            font-size: 0.88em;
-            line-height: 1.7;
+            line-height: 1.6;
             margin-bottom: 14px;
+            font-size: 0.9em;
+            font-style: italic;
+            border-left: 2px solid rgba(148, 163, 184, 0.3);
             padding-left: 12px;
-            border-left: 3px solid rgba(251, 191, 36, 0.5);
+        }}
+        .repo-desc:empty {{ display: none; }}
+        .repo-desc-label {{
+            color: #64748b;
+            font-size: 0.75em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }}
+        .repo-summary {{
+            color: #e2e8f0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }}
+        .repo-highlights-title {{
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin: 12px 0 6px 0;
+            font-weight: 600;
+        }}
+        .repo-highlight-item {{
+            color: #cbd5e1;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 4px 0 4px 16px;
+            position: relative;
+        }}
+        .repo-highlight-item::before {{
+            content: "•";
+            color: #fbbf24;
+            position: absolute;
+            left: -12px;
+        }}
+        .repo-scene {{
+            color: #34d399;
+            font-size: 0.85em;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(52, 211, 153, 0.1);
+            border-radius: 8px;
+            display: inline-block;
         }}
         .repo-meta {{
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
             font-size: 0.85em;
+            margin-top: 16px;
             margin-bottom: 12px;
         }}
         .meta-item {{
@@ -786,6 +951,17 @@ def generate_html(repos, date_str):
             color: #60a5fa;
             text-decoration: none;
         }}
+        .ai-badge {{
+            display: inline-block;
+            padding: 2px 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }}
         @media (max-width: 600px) {{
             h1 {{ font-size: 2em; }}
             .repo {{ padding: 20px; }}
@@ -813,10 +989,11 @@ def generate_html(repos, date_str):
         </div>
 """
     
+    print("Generating AI translations...")
     for i, repo in enumerate(repos[:10], 1):
         name = repo.get("full_name", "Unknown")
         url = repo.get("html_url", "#")
-        desc = repo.get("description") or "作者未提供项目描述"
+        desc = repo.get("description") or ""
         stars = repo.get("stargazers_count", 0)
         forks = repo.get("forks_count", 0)
         lang = repo.get("language") or "未标注"
@@ -828,31 +1005,38 @@ def generate_html(repos, date_str):
         owner_name = owner.get("login", "")
         owner_avatar = owner.get("avatar_url", "")
         
-        # 生成中文技术摘要
-        tech_summary = get_tech_summary(desc, topics, lang)
+        # Get AI translation
+        translation = translate_description(name, desc, topics, lang)
+        translation_html = parse_translation(translation) if translation else ""
         
-        # 构建 topics HTML
+        # Build topics HTML
         topics_html = ""
         if topics:
             topics_html = '<div class="topics">' + ''.join([f'<span class="topic">{t}</span>' for t in topics[:5]]) + '</div>'
         
-        # 构建 license HTML
+        # Build license HTML
         license_html = f'<div class="meta-item license">📄 {license_info}</div>' if license_info else ""
+        
+        # Build original description HTML (collapsed)
+        orig_desc_html = f'<div class="repo-desc">{desc}</div>' if desc else ""
+        
+        # AI badge
+        ai_badge = '<span class="ai-badge">AI</span>' if translation else ""
         
         html += f"""
         <div class="repo">
             <div class="repo-header">
                 <div class="rank">{i}</div>
                 <div class="repo-title">
-                    <div class="repo-name"><a href="{url}" target="_blank">{name}</a></div>
+                    <div class="repo-name"><a href="{url}" target="_blank">{name}</a>{ai_badge}</div>
                     <div class="repo-owner">
                         {"<img src='" + owner_avatar + "' alt=''>" if owner_avatar else "👤"}
                         {owner_name} · 创建于 {created_at}
                     </div>
                 </div>
             </div>
-            <div class="repo-desc">{desc}</div>
-            {f'<div class="repo-desc-zh">💡 {tech_summary}</div>' if tech_summary else ""}
+            {translation_html}
+            {orig_desc_html}
             {topics_html}
             <div class="repo-meta">
                 <div class="meta-item stars">⭐ {stars:,}</div>
@@ -869,7 +1053,7 @@ def generate_html(repos, date_str):
     
     html += f"""
         <div class="footer">
-            <p>📅 每日自动更新 · 由 GitHub Actions 生成</p>
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成 · 中文翻译由 AI 提供</p>
             <p style="margin-top: 10px; font-size: 0.85em;">
                 生成时间：{datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")} · 
                 <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
@@ -1014,7 +1198,6 @@ def generate_history_page():
     </div>
     
     <script>
-        // 动态加载历史记录
         fetch('data/latest.json')
             .then(r => r.json())
             .then(data => {
@@ -1051,7 +1234,7 @@ def main():
     # Save JSON data
     save_json(repos, date_str)
     
-    # Generate HTML reports
+    # Generate HTML reports with AI translations
     html = generate_html(repos, date_str)
     
     # Save as index.html

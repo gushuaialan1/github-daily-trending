@@ -33,6 +33,7 @@ jobs:
     - name: Generate trending report
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
       run: |
         python generate.py
     

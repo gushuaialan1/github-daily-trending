@@ -111,24 +111,63 @@
             border-radius: 50%;
         }
         .repo-desc {
-            color: #cbd5e1;
-            line-height: 1.8;
-            margin-bottom: 14px;
-            font-size: 0.95em;
-        }
-        .repo-desc-zh {
             color: #94a3b8;
-            font-size: 0.88em;
-            line-height: 1.7;
+            line-height: 1.6;
             margin-bottom: 14px;
+            font-size: 0.9em;
+            font-style: italic;
+            border-left: 2px solid rgba(148, 163, 184, 0.3);
             padding-left: 12px;
-            border-left: 3px solid rgba(251, 191, 36, 0.5);
+        }
+        .repo-desc:empty { display: none; }
+        .repo-desc-label {
+            color: #64748b;
+            font-size: 0.75em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .repo-summary {
+            color: #e2e8f0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .repo-highlights-title {
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin: 12px 0 6px 0;
+            font-weight: 600;
+        }
+        .repo-highlight-item {
+            color: #cbd5e1;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 4px 0 4px 16px;
+            position: relative;
+        }
+        .repo-highlight-item::before {
+            content: "•";
+            color: #fbbf24;
+            position: absolute;
+            left: -12px;
+        }
+        .repo-scene {
+            color: #34d399;
+            font-size: 0.85em;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(52, 211, 153, 0.1);
+            border-radius: 8px;
+            display: inline-block;
         }
         .repo-meta {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
             font-size: 0.85em;
+            margin-top: 16px;
             margin-bottom: 12px;
         }
         .meta-item {
@@ -203,6 +242,17 @@
             color: #60a5fa;
             text-decoration: none;
         }
+        .ai-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
         @media (max-width: 600px) {
             h1 { font-size: 2em; }
             .repo { padding: 20px; }
@@ -240,13 +290,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">AI agents running research on single-GPU nanochat training automatically</div>
-            <div class="repo-desc-zh">💡 相关技术：人工智能、增强现实、C</div>
             
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 24,596</div>
+                <div class="meta-item stars">⭐ 24,852</div>
                 <div class="meta-item lang">🟣 Python</div>
-                <div class="meta-item forks">🍴 3,114</div>
+                <div class="meta-item forks">🍴 3,141</div>
                 
             </div>
             <div class="repo-footer">
@@ -266,13 +316,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">CLI-Anything: Making ALL Software Agent-Native</div>
-            <div class="repo-desc-zh">💡 相关技术：命令行工具、增强现实、C</div>
             
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 3,824</div>
+                <div class="meta-item stars">⭐ 3,985</div>
                 <div class="meta-item lang">🟣 Python</div>
-                <div class="meta-item forks">🍴 360</div>
+                <div class="meta-item forks">🍴 374</div>
                 
             </div>
             <div class="repo-footer">
@@ -285,32 +335,6 @@
             <div class="repo-header">
                 <div class="rank">3</div>
                 <div class="repo-title">
-                    <div class="repo-name"><a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">twostraws/SwiftUI-Agent-Skill</a></div>
-                    <div class="repo-owner">
-                        <img src='https://avatars.githubusercontent.com/u/190200?v=4' alt=''>
-                        twostraws · 创建于 2026年03月05日
-                    </div>
-                </div>
-            </div>
-            <div class="repo-desc">SwiftUI agent skill for Claude Code, Codex, and other AI tools.</div>
-            <div class="repo-desc-zh">💡 相关技术：人工智能、工具、用户界面</div>
-            
-            <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,774</div>
-                <div class="meta-item lang">🟣 未标注</div>
-                <div class="meta-item forks">🍴 58</div>
-                <div class="meta-item license">📄 MIT 协议</div>
-            </div>
-            <div class="repo-footer">
-                <span>📝 最后更新于 2026年03月05日</span>
-                <span>🔗 <a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">查看仓库 →</a></span>
-            </div>
-        </div>
-
-        <div class="repo">
-            <div class="repo-header">
-                <div class="rank">4</div>
-                <div class="repo-title">
                     <div class="repo-name"><a href="https://github.com/tanweai/pua" target="_blank">tanweai/pua</a></div>
                     <div class="repo-owner">
                         <img src='https://avatars.githubusercontent.com/u/256783335?v=4' alt=''>
@@ -318,18 +342,44 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">你是一个曾经被寄予厚望的 P8 级工程师。Anthropic 当初给你定级的时候，对你的期望是很高的。</div>
-            <div class="repo-desc-zh">💡 相关技术：C、R</div>
             
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,719</div>
+                <div class="meta-item stars">⭐ 1,930</div>
                 <div class="meta-item lang">🟣 TypeScript</div>
-                <div class="meta-item forks">🍴 60</div>
+                <div class="meta-item forks">🍴 64</div>
                 
             </div>
             <div class="repo-footer">
                 <span>📝 最后更新于 2026年03月11日</span>
                 <span>🔗 <a href="https://github.com/tanweai/pua" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">4</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">twostraws/SwiftUI-Agent-Skill</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/190200?v=4' alt=''>
+                        twostraws · 创建于 2026年03月05日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">SwiftUI agent skill for Claude Code, Codex, and other AI tools.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,780</div>
+                <div class="meta-item lang">🟣 未标注</div>
+                <div class="meta-item forks">🍴 58</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年03月05日</span>
+                <span>🔗 <a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">查看仓库 →</a></span>
             </div>
         </div>
 
@@ -344,11 +394,11 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">A CLI for Twitter/X — feed, bookmarks, and user timeline in terminal</div>
-            <div class="repo-desc-zh">💡 相关技术：命令行工具、用户、终端</div>
             
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,568</div>
+                <div class="meta-item stars">⭐ 1,580</div>
                 <div class="meta-item lang">🟣 Python</div>
                 <div class="meta-item forks">🍴 138</div>
                 <div class="meta-item license">📄 Apache 2.0</div>
@@ -370,13 +420,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">Open-source intelligence for the global theater. Track everything from the corporate/private jets of the wealthy, and spy satellites, to seismic events in one unified interface. The knowledge is available to all but rarely aggregated in the open, until now.</div>
-            <div class="repo-desc-zh">💡 相关技术：人工智能、事件、增强现实</div>
             <div class="topics"><span class="topic">osint</span><span class="topic">osint-resources</span><span class="topic">osint-tool</span><span class="topic">osint-tools</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,481</div>
+                <div class="meta-item stars">⭐ 1,520</div>
                 <div class="meta-item lang">🟣 TypeScript</div>
-                <div class="meta-item forks">🍴 164</div>
+                <div class="meta-item forks">🍴 169</div>
                 
             </div>
             <div class="repo-footer">
@@ -396,13 +446,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">end to end app store screenshot creation using AI</div>
-            <div class="repo-desc-zh">💡 相关技术：人工智能、应用、存储</div>
             <div class="topics"><span class="topic">agentic-ai</span><span class="topic">apple</span><span class="topic">appstore</span><span class="topic">automate</span><span class="topic">claude</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,404</div>
+                <div class="meta-item stars">⭐ 1,477</div>
                 <div class="meta-item lang">🟣 未标注</div>
-                <div class="meta-item forks">🍴 86</div>
+                <div class="meta-item forks">🍴 97</div>
                 
             </div>
             <div class="repo-footer">
@@ -422,11 +472,11 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">the holly uncodexify instructions - letting GPT create uncodexified UI</div>
-            <div class="repo-desc-zh">💡 相关技术：用户界面、C、R</div>
             
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 1,386</div>
+                <div class="meta-item stars">⭐ 1,388</div>
                 <div class="meta-item lang">🟣 未标注</div>
                 <div class="meta-item forks">🍴 106</div>
                 
@@ -448,13 +498,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">The largest open-source medical AI skills library for OpenClaw🦞.</div>
-            <div class="repo-desc-zh">💡 相关技术：人工智能、库、增强现实</div>
             <div class="topics"><span class="topic">awesome</span><span class="topic">claude-code</span><span class="topic">clawhub</span><span class="topic">medical</span><span class="topic">nanoclaw</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 971</div>
+                <div class="meta-item stars">⭐ 978</div>
                 <div class="meta-item lang">🟣 Python</div>
-                <div class="meta-item forks">🍴 116</div>
+                <div class="meta-item forks">🍴 117</div>
                 
             </div>
             <div class="repo-footer">
@@ -474,13 +524,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="repo-desc">Bridge Claude Code / Codex to IM platforms — chat with AI coding agents from Telegram, Discord, or Feishu/Lark.</div>
-            <div class="repo-desc-zh">💡 相关技术：人工智能、桥接、增强现实</div>
             <div class="topics"><span class="topic">chatbot</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">discord</span><span class="topic">feishu</span></div>
             <div class="repo-meta">
-                <div class="meta-item stars">⭐ 867</div>
+                <div class="meta-item stars">⭐ 872</div>
                 <div class="meta-item lang">🟣 TypeScript</div>
-                <div class="meta-item forks">🍴 111</div>
+                <div class="meta-item forks">🍴 112</div>
                 <div class="meta-item license">📄 MIT 协议</div>
             </div>
             <div class="repo-footer">
@@ -490,9 +540,9 @@
         </div>
 
         <div class="footer">
-            <p>📅 每日自动更新 · 由 GitHub Actions 生成</p>
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成 · 中文翻译由 AI 提供</p>
             <p style="margin-top: 10px; font-size: 0.85em;">
-                生成时间：2026年03月11日 17:49:56 · 
+                生成时间：2026年03月11日 19:23:36 · 
                 <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
             </p>
         </div>
