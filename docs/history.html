@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Trending - 历史记录</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .nav a {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .nav a.active {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .date-list {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .date-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .date-item:last-child {
+            border-bottom: none;
+        }
+        .date-item:hover {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+        }
+        .date-item a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .date-item a:hover {
+            text-decoration: underline;
+        }
+        .arrow {
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 历史记录</h1>
+            <p style="color: #94a3b8;">查看往期 GitHub Trending 报告</p>
+        </header>
+        
+        <div class="nav">
+            <a href="index.html">今日</a>
+            <a href="history.html" class="active">历史</a>
+        </div>
+        
+        <div class="date-list" id="dateList">
+            <div class="date-item">
+                <a href="latest.html">最新报告</a>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dynamically populate from available files
+        fetch('data/latest.json')
+            .then(r => r.json())
+            .then(data => {
+                const list = document.getElementById('dateList');
+                const date = data.date;
+                if (date) {
+                    const item = document.createElement('div');
+                    item.className = 'date-item';
+                    item.innerHTML = `<a href="archive/${date}.html">${date}</a><span class="arrow">→</span>`;
+                    list.appendChild(item);
+                }
+            })
+            .catch(() => {});
+    </script>
+</body>
+</html>

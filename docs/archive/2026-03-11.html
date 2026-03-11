@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Trending - 2026年03月11日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .date {
+            color: #94a3b8;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+        }
+        .repo {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .repo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .repo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .rank {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 16px;
+            color: #0f172a;
+        }
+        .repo-name {
+            font-size: 1.35em;
+            font-weight: 600;
+        }
+        .repo-name a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .repo-name a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        .repo-desc {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            font-size: 0.95em;
+        }
+        .repo-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.9em;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stars { color: #fbbf24; }
+        .lang { color: #a78bfa; }
+        .forks { color: #94a3b8; }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .nav a.active {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .repo { padding: 20px; }
+            .rank { width: 36px; height: 36px; font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 GitHub Trending</h1>
+            <div class="date">2026年03月11日 · 今日热门 Top 10</div>
+        </header>
+        
+        <div class="nav">
+            <a href="index.html" class="active">今日</a>
+            <a href="history.html">历史</a>
+            <a href="https://github.com/user/repo" target="_blank">GitHub →</a>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">1</div>
+                <div class="repo-name"><a href="https://github.com/karpathy/autoresearch" target="_blank">karpathy/autoresearch</a></div>
+            </div>
+            <div class="repo-desc">AI agents running research on single-GPU nanochat training automatically</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 24,212</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 3,082</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">2</div>
+                <div class="repo-name"><a href="https://github.com/HKUDS/CLI-Anything" target="_blank">HKUDS/CLI-Anything</a></div>
+            </div>
+            <div class="repo-desc">CLI-Anything: Making ALL Software Agent-Native</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 3,542</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 337</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">3</div>
+                <div class="repo-name"><a href="https://github.com/twostraws/SwiftUI-Agent-Skill" target="_blank">twostraws/SwiftUI-Agent-Skill</a></div>
+            </div>
+            <div class="repo-desc">SwiftUI agent skill for Claude Code, Codex, and other AI tools.</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,765</div>
+                <div class="meta-item lang">🟣 未知</div>
+                <div class="meta-item forks">🍴 58</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">4</div>
+                <div class="repo-name"><a href="https://github.com/jackwener/twitter-cli" target="_blank">jackwener/twitter-cli</a></div>
+            </div>
+            <div class="repo-desc">A CLI for Twitter/X — feed, bookmarks, and user timeline in terminal</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,550</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 133</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">5</div>
+                <div class="repo-name"><a href="https://github.com/BigBodyCobain/Shadowbroker" target="_blank">BigBodyCobain/Shadowbroker</a></div>
+            </div>
+            <div class="repo-desc">Open-source intelligence for the global theater. Track everything from the corporate/private jets of the wealthy, and spy satellites, to seismic events in one unified interface. The knowledge is available to all but rarely aggregated in the open, until now.</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,467</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 164</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">6</div>
+                <div class="repo-name"><a href="https://github.com/cyxzdev/Uncodixfy" target="_blank">cyxzdev/Uncodixfy</a></div>
+            </div>
+            <div class="repo-desc">the holly uncodexify instructions - letting GPT create uncodexified UI</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,383</div>
+                <div class="meta-item lang">🟣 未知</div>
+                <div class="meta-item forks">🍴 106</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">7</div>
+                <div class="repo-name"><a href="https://github.com/tanweai/pua" target="_blank">tanweai/pua</a></div>
+            </div>
+            <div class="repo-desc">你是一个曾经被寄予厚望的 P8 级工程师。Anthropic 当初给你定级的时候，对你的期望是很高的。</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,338</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 44</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">8</div>
+                <div class="repo-name"><a href="https://github.com/ParthJadhav/app-store-screenshots" target="_blank">ParthJadhav/app-store-screenshots</a></div>
+            </div>
+            <div class="repo-desc">end to end app store screenshot creation using AI</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,313</div>
+                <div class="meta-item lang">🟣 未知</div>
+                <div class="meta-item forks">🍴 82</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">9</div>
+                <div class="repo-name"><a href="https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills" target="_blank">FreedomIntelligence/OpenClaw-Medical-Skills</a></div>
+            </div>
+            <div class="repo-desc">The largest open-source medical AI skills library for OpenClaw🦞.</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 955</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 116</div>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">10</div>
+                <div class="repo-name"><a href="https://github.com/op7418/Claude-to-IM-skill" target="_blank">op7418/Claude-to-IM-skill</a></div>
+            </div>
+            <div class="repo-desc">Bridge Claude Code / Codex to IM platforms — chat with AI coding agents from Telegram, Discord, or Feishu/Lark.</div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 858</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 110</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>每日自动更新 · 由 GitHub Actions 生成</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Generated at 2026-03-11 15:56:56</p>
+        </div>
+    </div>
+</body>
+</html>
