@@ -18,7 +18,7 @@ CACHE_FILE = DATA_DIR / "translation_cache.json"
 
 # Kimi API Configuration
 KIMI_API_KEY = os.environ.get("KIMI_API_KEY", "")
-KIMI_API_URL = "https://api.moonshot.cn/v1/chat/completions"
+KIMI_API_URL = "https://api.kimi.com/coding/v1/chat/completions"
 
 def load_translation_cache():
     """Load cached translations to avoid repeated API calls"""
@@ -84,10 +84,11 @@ def translate_description(repo_name, description, topics, language):
             KIMI_API_URL,
             headers={
                 "Authorization": f"Bearer {KIMI_API_KEY}",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "User-Agent": "KimiCLI/0.77"
             },
             json={
-                "model": "moonshot-v1-8k",
+                "model": "kimi-for-coding",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.7
             },
