@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 热门项目 - 2026年10月28日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .date {
+            color: #94a3b8;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .repo {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .repo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .repo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .rank {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 16px;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+        .repo-title {
+            flex: 1;
+            min-width: 0;
+        }
+        .repo-name {
+            font-size: 1.35em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .repo-name a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+        .repo-name a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        .repo-owner {
+            color: #64748b;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .repo-owner img {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+        .repo-desc {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-size: 0.9em;
+            font-style: italic;
+            border-left: 2px solid rgba(148, 163, 184, 0.3);
+            padding-left: 12px;
+        }
+        .repo-desc:empty { display: none; }
+        .repo-desc-label {
+            color: #64748b;
+            font-size: 0.75em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .repo-summary {
+            color: #e2e8f0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .repo-highlights-title {
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin: 12px 0 6px 0;
+            font-weight: 600;
+        }
+        .repo-highlight-item {
+            color: #cbd5e1;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 4px 0 4px 16px;
+            position: relative;
+        }
+        .repo-highlight-item::before {
+            content: "•";
+            color: #fbbf24;
+            position: absolute;
+            left: -12px;
+        }
+        .repo-scene {
+            color: #34d399;
+            font-size: 0.85em;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(52, 211, 153, 0.1);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .repo-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85em;
+            margin-top: 16px;
+            margin-bottom: 12px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+        }
+        .stars { color: #fbbf24; }
+        .lang { color: #a78bfa; }
+        .forks { color: #94a3b8; }
+        .license { color: #34d399; }
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .topic {
+            padding: 4px 12px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8em;
+            color: #64748b;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .nav a.active {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .ai-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .repo { padding: 20px; }
+            .rank { width: 40px; height: 40px; font-size: 1.1em; }
+            .repo-name { font-size: 1.15em; }
+            .repo-meta { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 GitHub 热门项目</h1>
+            <div class="date">2026年10月28日 · 今日新星 Top 10</div>
+            <div class="subtitle">
+                自动追踪 GitHub 上最近一周最受欢迎的开源项目<br>
+                发现前沿技术、创新工具和优秀的代码实践
+            </div>
+        </header>
+        
+        <div class="nav">
+            <a href="index.html" class="active">📊 今日榜单</a>
+            <a href="history.html">📚 历史归档</a>
+            <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">⚙️ 仓库设置</a>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">1</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/JustAResearcher/gpu-unlock-ada" target="_blank">JustAResearcher/gpu-unlock-ada</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/62031663?v=4' alt=''>
+                        JustAResearcher · 创建于 2026年10月23日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">GPU tensor unlock source for RTX 4090 and experimental RTX 4070 Ti SUPER; firmware generated locally</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 4,325</div>
+                <div class="meta-item lang">🟣 C</div>
+                <div class="meta-item forks">🍴 558</div>
+                <div class="meta-item license">📄 GPL v2</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月26日</span>
+                <span>🔗 <a href="https://github.com/JustAResearcher/gpu-unlock-ada" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">2</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/rddmwmddr/android-ad-cleaner" target="_blank">rddmwmddr/android-ad-cleaner</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/5119232?v=4' alt=''>
+                        rddmwmddr · 创建于 2026年10月24日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">关掉国产安卓手机系统里的广告、热搜、资讯推荐和营销推送。不 root，可还原，支持 AI 智能体一键执行。</div>
+            <div class="topics"><span class="topic">adb</span><span class="topic">ai-agent</span><span class="topic">android</span><span class="topic">coloros</span><span class="topic">debloat</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 3,738</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 330</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月28日</span>
+                <span>🔗 <a href="https://github.com/rddmwmddr/android-ad-cleaner" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">3</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/designfuchen/word-atlas" target="_blank">designfuchen/word-atlas</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/17679892?v=4' alt=''>
+                        designfuchen · 创建于 2026年10月25日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">词光 · Word Atlas — Illustrated IELTS vocabulary with 7,298 words, UK/US audio and FSRS review. Open-source app + CC BY 4.0 dataset.</div>
+            <div class="topics"><span class="topic">chinese</span><span class="topic">dataset</span><span class="topic">english-learning</span><span class="topic">flashcards</span><span class="topic">fsrs</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,763</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 625</div>
+                <div class="meta-item license">📄 Other</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月27日</span>
+                <span>🔗 <a href="https://github.com/designfuchen/word-atlas" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">4</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/unclebob/ub-mode" target="_blank">unclebob/ub-mode</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/36901?v=4' alt=''>
+                        unclebob · 创建于 2026年10月25日
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,752</div>
+                <div class="meta-item lang">🟣 未标注</div>
+                <div class="meta-item forks">🍴 128</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月25日</span>
+                <span>🔗 <a href="https://github.com/unclebob/ub-mode" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">5</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/t3dotgg/tstack" target="_blank">t3dotgg/tstack</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/6751787?v=4' alt=''>
+                        t3dotgg · 创建于 2026年10月24日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">The agent skills I use every day. Works with Claude Code and Codex.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,075</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 124</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月28日</span>
+                <span>🔗 <a href="https://github.com/t3dotgg/tstack" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">6</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/oosexgang/hackios-xnu-kernel" target="_blank">oosexgang/hackios-xnu-kernel</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/343646710?v=4' alt=''>
+                        oosexgang · 创建于 2026年10月22日
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,846</div>
+                <div class="meta-item lang">🟣 C</div>
+                <div class="meta-item forks">🍴 321</div>
+                <div class="meta-item license">📄 Other</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月26日</span>
+                <span>🔗 <a href="https://github.com/oosexgang/hackios-xnu-kernel" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">7</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/DLSS-5-Swaper-New/.github" target="_blank">DLSS-5-Swaper-New/.github</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/348993019?v=4' alt=''>
+                        DLSS-5-Swaper-New · 创建于 2026年10月27日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">DLSS 5 Swapper is a specialized Windows utility for PC gaming enthusiasts interested in managing compatible graphics components and exploring rendering configurations.</div>
+            <div class="topics"><span class="topic">dlss</span><span class="topic">dlss-5-download</span><span class="topic">dlss-5-games</span><span class="topic">dlss-5-nvidia</span><span class="topic">dlss-5-swapper</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,544</div>
+                <div class="meta-item lang">🟣 未标注</div>
+                <div class="meta-item forks">🍴 1</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月27日</span>
+                <span>🔗 <a href="https://github.com/DLSS-5-Swaper-New/.github" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">8</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/morganlinton/BeautifulRust" target="_blank">morganlinton/BeautifulRust</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/41390763?v=4' alt=''>
+                        morganlinton · 创建于 2026年10月23日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Agent Skills that teach coding agents to write, review, and port idiomatic Rust, plus a tested clippy config. Works with Claude Code, Codex, Copilot, Cursor, and Gemini CLI.</div>
+            <div class="topics"><span class="topic">agent-skills</span><span class="topic">claude-code</span><span class="topic">claude-plugin</span><span class="topic">claude-skills</span><span class="topic">clippy</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,333</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 59</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月27日</span>
+                <span>🔗 <a href="https://github.com/morganlinton/BeautifulRust" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">9</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/enesozturk/dimensional-drawing" target="_blank">enesozturk/dimensional-drawing</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/19428358?v=4' alt=''>
+                        enesozturk · 创建于 2026年10月23日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Create Apple style dimensional drawings of UI components.</div>
+            <div class="topics"><span class="topic">skills</span><span class="topic">ui</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,281</div>
+                <div class="meta-item lang">🟣 HTML</div>
+                <div class="meta-item forks">🍴 80</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月24日</span>
+                <span>🔗 <a href="https://github.com/enesozturk/dimensional-drawing" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">10</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/interplains/Zero-Breach-Toolkit" target="_blank">interplains/Zero-Breach-Toolkit</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/39777629?v=4' alt=''>
+                        interplains · 创建于 2026年10月25日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Free, open-source, offline checks for traces of known mercenary spyware. Works on Windows, macOS and Linux, Android phones and iPhone backups.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,261</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 137</div>
+                <div class="meta-item license">📄 Apache 2.0</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年10月28日</span>
+                <span>🔗 <a href="https://github.com/interplains/Zero-Breach-Toolkit" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成 · 中文翻译由 AI 提供</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                生成时间：2026年10月28日 06:36:15 · 
+                <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
