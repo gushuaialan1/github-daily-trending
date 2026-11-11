@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 热门项目 - 2026年11月11日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .date {
+            color: #94a3b8;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .repo {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .repo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .repo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .rank {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 16px;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+        .repo-title {
+            flex: 1;
+            min-width: 0;
+        }
+        .repo-name {
+            font-size: 1.35em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .repo-name a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+        .repo-name a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        .repo-owner {
+            color: #64748b;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .repo-owner img {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+        .repo-desc {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-size: 0.9em;
+            font-style: italic;
+            border-left: 2px solid rgba(148, 163, 184, 0.3);
+            padding-left: 12px;
+        }
+        .repo-desc:empty { display: none; }
+        .repo-desc-label {
+            color: #64748b;
+            font-size: 0.75em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .repo-summary {
+            color: #e2e8f0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .repo-highlights-title {
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin: 12px 0 6px 0;
+            font-weight: 600;
+        }
+        .repo-highlight-item {
+            color: #cbd5e1;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 4px 0 4px 16px;
+            position: relative;
+        }
+        .repo-highlight-item::before {
+            content: "•";
+            color: #fbbf24;
+            position: absolute;
+            left: -12px;
+        }
+        .repo-scene {
+            color: #34d399;
+            font-size: 0.85em;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(52, 211, 153, 0.1);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .repo-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85em;
+            margin-top: 16px;
+            margin-bottom: 12px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+        }
+        .stars { color: #fbbf24; }
+        .lang { color: #a78bfa; }
+        .forks { color: #94a3b8; }
+        .license { color: #34d399; }
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .topic {
+            padding: 4px 12px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8em;
+            color: #64748b;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .nav a.active {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .ai-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .repo { padding: 20px; }
+            .rank { width: 40px; height: 40px; font-size: 1.1em; }
+            .repo-name { font-size: 1.15em; }
+            .repo-meta { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 GitHub 热门项目</h1>
+            <div class="date">2026年11月11日 · 今日新星 Top 10</div>
+            <div class="subtitle">
+                自动追踪 GitHub 上最近一周最受欢迎的开源项目<br>
+                发现前沿技术、创新工具和优秀的代码实践
+            </div>
+        </header>
+        
+        <div class="nav">
+            <a href="index.html" class="active">📊 今日榜单</a>
+            <a href="history.html">📚 历史归档</a>
+            <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">⚙️ 仓库设置</a>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">1</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/NotRexed/Hookshot" target="_blank">NotRexed/Hookshot</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/179062254?v=4' alt=''>
+                        NotRexed · 创建于 2026年11月05日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">A Native Recompilation Of The Legend Of Zelda: Ocarina Of Time Nintendo Switch 2 Remake</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 6,878</div>
+                <div class="meta-item lang">🟣 C++</div>
+                <div class="meta-item forks">🍴 602</div>
+                <div class="meta-item license">📄 GPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月11日</span>
+                <span>🔗 <a href="https://github.com/NotRexed/Hookshot" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">2</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/huamidev/GestaltX" target="_blank">huamidev/GestaltX</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/354314991?v=4' alt=''>
+                        huamidev · 创建于 2026年11月09日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups, and support for 7 languages.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 5,483</div>
+                <div class="meta-item lang">🟣 Swift</div>
+                <div class="meta-item forks">🍴 2,147</div>
+                <div class="meta-item license">📄 GPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月11日</span>
+                <span>🔗 <a href="https://github.com/huamidev/GestaltX" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">3</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/tangerineturtle1/NX2navi" target="_blank">tangerineturtle1/NX2navi</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/178368288?v=4' alt=''>
+                        tangerineturtle1 · 创建于 2026年11月07日
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,976</div>
+                <div class="meta-item lang">🟣 C</div>
+                <div class="meta-item forks">🍴 200</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月10日</span>
+                <span>🔗 <a href="https://github.com/tangerineturtle1/NX2navi" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">4</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/jhaizhou-ops/S2Arm" target="_blank">jhaizhou-ops/S2Arm</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/258432107?v=4' alt=''>
+                        jhaizhou-ops · 创建于 2026年11月08日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Run your own Switch games natively on iPhone, iPad and Mac: game code rewritten to ARM64, graphics direct to Metal, one app for the whole library. Bring your own games and keys. 把你自己的 Switch 游戏原生带到 iPhone / iPad / Mac。</div>
+            <div class="topics"><span class="topic">apple-silicon</span><span class="topic">arm64</span><span class="topic">game-porting</span><span class="topic">ios</span><span class="topic">ipados</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,481</div>
+                <div class="meta-item lang">🟣 C#</div>
+                <div class="meta-item forks">🍴 461</div>
+                <div class="meta-item license">📄 Apache 2.0</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月11日</span>
+                <span>🔗 <a href="https://github.com/jhaizhou-ops/S2Arm" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">5</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/JenkinWoo/sheeridVerify" target="_blank">JenkinWoo/sheeridVerify</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/51308528?v=4' alt=''>
+                        JenkinWoo · 创建于 2026年11月06日
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,015</div>
+                <div class="meta-item lang">🟣 JavaScript</div>
+                <div class="meta-item forks">🍴 1,090</div>
+                <div class="meta-item license">📄 ISC License</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月06日</span>
+                <span>🔗 <a href="https://github.com/JenkinWoo/sheeridVerify" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">6</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/IainKay/ram-altman" target="_blank">IainKay/ram-altman</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/798621?v=4' alt=''>
+                        IainKay · 创建于 2026年11月05日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Monitors your RAM and reports any "quite terrible" unused capacity directly to the CEO of OpenAI.</div>
+            <div class="topics"><span class="topic">bash</span><span class="topic">cron</span><span class="topic">dram</span><span class="topic">email</span><span class="topic">humor</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,844</div>
+                <div class="meta-item lang">🟣 Shell</div>
+                <div class="meta-item forks">🍴 54</div>
+                <div class="meta-item license">📄 无版权限制</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月06日</span>
+                <span>🔗 <a href="https://github.com/IainKay/ram-altman" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">7</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/jamesondh/chimera-vocal-synth" target="_blank">jamesondh/chimera-vocal-synth</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/4026659?v=4' alt=''>
+                        jamesondh · 创建于 2026年11月05日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">the ultimate vocal synthesizer - sing, speak, beatbox, and more</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,778</div>
+                <div class="meta-item lang">🟣 Rust</div>
+                <div class="meta-item forks">🍴 206</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月10日</span>
+                <span>🔗 <a href="https://github.com/jamesondh/chimera-vocal-synth" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">8</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/DIYgod/pinky" target="_blank">DIYgod/pinky</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/8266075?v=4' alt=''>
+                        DIYgod · 创建于 2026年11月06日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Let AI agents use your phone, with you in the loop.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,767</div>
+                <div class="meta-item lang">🟣 Go</div>
+                <div class="meta-item forks">🍴 189</div>
+                <div class="meta-item license">📄 Apache 2.0</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月11日</span>
+                <span>🔗 <a href="https://github.com/DIYgod/pinky" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">9</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/mmdoctor/google-pro-helper" target="_blank">mmdoctor/google-pro-helper</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/155910760?v=4' alt=''>
+                        mmdoctor · 创建于 2026年11月05日
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,675</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 575</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月05日</span>
+                <span>🔗 <a href="https://github.com/mmdoctor/google-pro-helper" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">10</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/voyager-so/vork" target="_blank">voyager-so/vork</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/329758707?v=4' alt=''>
+                        voyager-so · 创建于 2026年11月05日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Headless 3D and VFX engine for agents. Research preview.</div>
+            <div class="topics"><span class="topic">3d</span><span class="topic">ai-agents</span><span class="topic">gpu</span><span class="topic">metal</span><span class="topic">ray-tracing</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,366</div>
+                <div class="meta-item lang">🟣 Rust</div>
+                <div class="meta-item forks">🍴 111</div>
+                <div class="meta-item license">📄 Other</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月10日</span>
+                <span>🔗 <a href="https://github.com/voyager-so/vork" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成 · 中文翻译由 AI 提供</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                生成时间：2026年11月11日 07:28:27 · 
+                <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
