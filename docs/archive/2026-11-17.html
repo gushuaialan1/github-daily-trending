@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 热门项目 - 2026年11月17日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .date {
+            color: #94a3b8;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .repo {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .repo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .repo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .rank {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 16px;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+        .repo-title {
+            flex: 1;
+            min-width: 0;
+        }
+        .repo-name {
+            font-size: 1.35em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .repo-name a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+        .repo-name a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        .repo-owner {
+            color: #64748b;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .repo-owner img {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+        .repo-desc {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-size: 0.9em;
+            font-style: italic;
+            border-left: 2px solid rgba(148, 163, 184, 0.3);
+            padding-left: 12px;
+        }
+        .repo-desc:empty { display: none; }
+        .repo-desc-label {
+            color: #64748b;
+            font-size: 0.75em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .repo-summary {
+            color: #e2e8f0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .repo-highlights-title {
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin: 12px 0 6px 0;
+            font-weight: 600;
+        }
+        .repo-highlight-item {
+            color: #cbd5e1;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 4px 0 4px 16px;
+            position: relative;
+        }
+        .repo-highlight-item::before {
+            content: "•";
+            color: #fbbf24;
+            position: absolute;
+            left: -12px;
+        }
+        .repo-scene {
+            color: #34d399;
+            font-size: 0.85em;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(52, 211, 153, 0.1);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .repo-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85em;
+            margin-top: 16px;
+            margin-bottom: 12px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+        }
+        .stars { color: #fbbf24; }
+        .lang { color: #a78bfa; }
+        .forks { color: #94a3b8; }
+        .license { color: #34d399; }
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .topic {
+            padding: 4px 12px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8em;
+            color: #64748b;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .nav a.active {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .ai-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .repo { padding: 20px; }
+            .rank { width: 40px; height: 40px; font-size: 1.1em; }
+            .repo-name { font-size: 1.15em; }
+            .repo-meta { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 GitHub 热门项目</h1>
+            <div class="date">2026年11月17日 · 今日新星 Top 10</div>
+            <div class="subtitle">
+                自动追踪 GitHub 上最近一周最受欢迎的开源项目<br>
+                发现前沿技术、创新工具和优秀的代码实践
+            </div>
+        </header>
+        
+        <div class="nav">
+            <a href="index.html" class="active">📊 今日榜单</a>
+            <a href="history.html">📚 历史归档</a>
+            <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">⚙️ 仓库设置</a>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">1</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/deepseek-ai/chat-demo" target="_blank">deepseek-ai/chat-demo</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/148330874?v=4' alt=''>
+                        deepseek-ai · 创建于 2026年11月12日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Chat Demo</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 4,313</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 924</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月13日</span>
+                <span>🔗 <a href="https://github.com/deepseek-ai/chat-demo" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">2</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/apex-compute/ANR" target="_blank">apex-compute/ANR</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/222723497?v=4' alt=''>
+                        apex-compute · 创建于 2026年11月11日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Apex Neural Rendering (ANR) by Apex Compute</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,517</div>
+                <div class="meta-item lang">🟣 C++</div>
+                <div class="meta-item forks">🍴 53</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月17日</span>
+                <span>🔗 <a href="https://github.com/apex-compute/ANR" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">3</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/hitkeeen/blender-ai-mcp-addon" target="_blank">hitkeeen/blender-ai-mcp-addon</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/340037382?v=4' alt=''>
+                        hitkeeen · 创建于 2026年11月12日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">AI assistant and MCP server for Blender: visual chat, scene tools, multi-agent workflows. Works with ChatGPT/GPT, Claude, Gemini, Ollama, OpenCode. Blender AI addon, copilot for 3D, bpy Python scripting, MCP integration.</div>
+            <div class="topics"><span class="topic">ai-agents</span><span class="topic">ai-assistant</span><span class="topic">blender</span><span class="topic">blender-addon</span><span class="topic">blender-ai</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,331</div>
+                <div class="meta-item lang">🟣 未标注</div>
+                <div class="meta-item forks">🍴 57</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月12日</span>
+                <span>🔗 <a href="https://github.com/hitkeeen/blender-ai-mcp-addon" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">4</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/Noniv/abyssal-garden" target="_blank">Noniv/abyssal-garden</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/80125277?v=4' alt=''>
+                        Noniv · 创建于 2026年11月12日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">A dreamy underwater world you can swim through in your browser: swaying kelp forests, sunbeams, a sunken ship and manta rays. Everything is generated by code with WebGPU (no images, models or sound files), all in a single 97 KB HTML file.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,894</div>
+                <div class="meta-item lang">🟣 JavaScript</div>
+                <div class="meta-item forks">🍴 289</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月14日</span>
+                <span>🔗 <a href="https://github.com/Noniv/abyssal-garden" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">5</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/duwqijlk/muse-protocol" target="_blank">duwqijlk/muse-protocol</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/126966774?v=4' alt=''>
+                        duwqijlk · 创建于 2026年11月14日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">muse.ai 注册与邀请码兑换协议研究（纯 HTTP Python 实现）</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,524</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 608</div>
+                <div class="meta-item license">📄 Other</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月15日</span>
+                <span>🔗 <a href="https://github.com/duwqijlk/muse-protocol" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">6</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/Eynnzerr/TelemetryCleaner" target="_blank">Eynnzerr/TelemetryCleaner</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/73703990?v=4' alt=''>
+                        Eynnzerr · 创建于 2026年11月11日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">基于 Shizuku 免 Root 清除国产安卓 SystemHelper、RegService 等系统预装隐私数据收集模块</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,394</div>
+                <div class="meta-item lang">🟣 Kotlin</div>
+                <div class="meta-item forks">🍴 117</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月17日</span>
+                <span>🔗 <a href="https://github.com/Eynnzerr/TelemetryCleaner" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">7</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/ZiChuanLan/freebie-radar" target="_blank">ZiChuanLan/freebie-radar</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/139305401?v=4' alt=''>
+                        ZiChuanLan · 创建于 2026年11月12日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">白嫖与资讯资源聚合雷达：100+个源定时采集 + AI 二审过滤假福利 + 获取方式分级隔离抽奖/试用/推广 + Telegram 即时推送</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,283</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 220</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月16日</span>
+                <span>🔗 <a href="https://github.com/ZiChuanLan/freebie-radar" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">8</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/Immortal-Protocols/lastbook" target="_blank">Immortal-Protocols/lastbook</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/223367958?v=4' alt=''>
+                        Immortal-Protocols · 创建于 2026年11月12日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Offline knowledge AI, maps and videos for survival and rebuilding</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 958</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 103</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月17日</span>
+                <span>🔗 <a href="https://github.com/Immortal-Protocols/lastbook" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">9</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/opencoredev/islandcn" target="_blank">opencoredev/islandcn</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/218007078?v=4' alt=''>
+                        opencoredev · 创建于 2026年11月13日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">The open-source Dynamic Island for React, installed with shadcn.</div>
+            <div class="topics"><span class="topic">dynamic-island</span><span class="topic">nextjs</span><span class="topic">react</span><span class="topic">shadcn</span><span class="topic">typescript</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 787</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 64</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月13日</span>
+                <span>🔗 <a href="https://github.com/opencoredev/islandcn" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">10</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/AIRzZ90/study-materials-fork" target="_blank">AIRzZ90/study-materials-fork</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/218946305?v=4' alt=''>
+                        AIRzZ90 · 创建于 2026年11月12日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">A cross-platform Tauri 2 interface and interaction practice project</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 747</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 1,225</div>
+                <div class="meta-item license">📄 Other</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月12日</span>
+                <span>🔗 <a href="https://github.com/AIRzZ90/study-materials-fork" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成 · 中文翻译由 AI 提供</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                生成时间：2026年11月17日 08:46:40 · 
+                <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
