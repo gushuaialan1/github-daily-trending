@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 热门项目 - 2026年11月28日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .date {
+            color: #94a3b8;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .repo {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .repo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .repo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .rank {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 16px;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+        .repo-title {
+            flex: 1;
+            min-width: 0;
+        }
+        .repo-name {
+            font-size: 1.35em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .repo-name a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+        .repo-name a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        .repo-owner {
+            color: #64748b;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .repo-owner img {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+        .repo-desc {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            font-size: 0.9em;
+            font-style: italic;
+            border-left: 2px solid rgba(148, 163, 184, 0.3);
+            padding-left: 12px;
+        }
+        .repo-desc:empty { display: none; }
+        .repo-desc-label {
+            color: #64748b;
+            font-size: 0.75em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .repo-summary {
+            color: #e2e8f0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .repo-highlights-title {
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin: 12px 0 6px 0;
+            font-weight: 600;
+        }
+        .repo-highlight-item {
+            color: #cbd5e1;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 4px 0 4px 16px;
+            position: relative;
+        }
+        .repo-highlight-item::before {
+            content: "•";
+            color: #fbbf24;
+            position: absolute;
+            left: -12px;
+        }
+        .repo-scene {
+            color: #34d399;
+            font-size: 0.85em;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(52, 211, 153, 0.1);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .repo-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85em;
+            margin-top: 16px;
+            margin-bottom: 12px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+        }
+        .stars { color: #fbbf24; }
+        .lang { color: #a78bfa; }
+        .forks { color: #94a3b8; }
+        .license { color: #34d399; }
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .topic {
+            padding: 4px 12px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8em;
+            color: #64748b;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav a:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .nav a.active {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .ai-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .repo { padding: 20px; }
+            .rank { width: 40px; height: 40px; font-size: 1.1em; }
+            .repo-name { font-size: 1.15em; }
+            .repo-meta { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 GitHub 热门项目</h1>
+            <div class="date">2026年11月28日 · 今日新星 Top 10</div>
+            <div class="subtitle">
+                自动追踪 GitHub 上最近一周最受欢迎的开源项目<br>
+                发现前沿技术、创新工具和优秀的代码实践
+            </div>
+        </header>
+        
+        <div class="nav">
+            <a href="index.html" class="active">📊 今日榜单</a>
+            <a href="history.html">📚 历史归档</a>
+            <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">⚙️ 仓库设置</a>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">1</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/Marvisak/VIctory" target="_blank">Marvisak/VIctory</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/60314886?v=4' alt=''>
+                        Marvisak · 创建于 2026年11月23日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">An attempt at running GTA VI on PC</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 13,907</div>
+                <div class="meta-item lang">🟣 Rust</div>
+                <div class="meta-item forks">🍴 2,417</div>
+                <div class="meta-item license">📄 GPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月25日</span>
+                <span>🔗 <a href="https://github.com/Marvisak/VIctory" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">2</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/trustno1-coder/VIctory-NVIDIA" target="_blank">trustno1-coder/VIctory-NVIDIA</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/361337194?v=4' alt=''>
+                        trustno1-coder · 创建于 2026年11月25日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">VIctory (Xbox Series compatibility layer) tuned for NVIDIA RTX cards: Series X at 2560x1440 with DLSS, about 26-30 fps on an RTX 5070, DLSS frame generation 2x-6x, an F1 settings menu and F3 stats panel, open water without dark blocks. Built on many repos combined into one. No game files or NVIDIA files included.</div>
+            <div class="topics"><span class="topic">compatibility-layer</span><span class="topic">directx-12</span><span class="topic">dlss</span><span class="topic">frame-generation</span><span class="topic">nvidia</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 4,546</div>
+                <div class="meta-item lang">🟣 Rust</div>
+                <div class="meta-item forks">🍴 1,620</div>
+                <div class="meta-item license">📄 GPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月28日</span>
+                <span>🔗 <a href="https://github.com/trustno1-coder/VIctory-NVIDIA" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">3</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/fxceless/victory-fork" target="_blank">fxceless/victory-fork</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/36782933?v=4' alt=''>
+                        fxceless · 创建于 2026年11月24日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Work-in-progress fork of VIctory: getting an Xbox Series title to render and run on a Windows PC. No game files.</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 3,369</div>
+                <div class="meta-item lang">🟣 Rust</div>
+                <div class="meta-item forks">🍴 1,015</div>
+                <div class="meta-item license">📄 GPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月28日</span>
+                <span>🔗 <a href="https://github.com/fxceless/victory-fork" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">4</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/ProjectLeonida/mandy" target="_blank">ProjectLeonida/mandy</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/360438810?v=4' alt=''>
+                        ProjectLeonida · 创建于 2026年11月23日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">A continuation of Leonida, the Xbox > PC port interface for GTA VI</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 3,031</div>
+                <div class="meta-item lang">🟣 Python</div>
+                <div class="meta-item forks">🍴 660</div>
+                <div class="meta-item license">📄 GPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月28日</span>
+                <span>🔗 <a href="https://github.com/ProjectLeonida/mandy" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">5</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/nexu-io/opengame" target="_blank">nexu-io/opengame</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/263625318?v=4' alt=''>
+                        nexu-io · 创建于 2026年11月25日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">The Super Game Agent — the Unity & Unreal for AI agents, with 100+ viral games to remix. Turn 20+ coding agents (Claude Code, Codex, DeepSeek, etc.) into a full-stack AI game studio. Build and publish 3D & mini-games to WeChat, Douyin, TikTok, Telegram, itch.io, and more.</div>
+            <div class="topics"><span class="topic">agent-skills</span><span class="topic">ai-agents</span><span class="topic">ai-game-generator</span><span class="topic">claude-code</span><span class="topic">codex</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,526</div>
+                <div class="meta-item lang">🟣 TypeScript</div>
+                <div class="meta-item forks">🍴 397</div>
+                <div class="meta-item license">📄 Apache 2.0</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月28日</span>
+                <span>🔗 <a href="https://github.com/nexu-io/opengame" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">6</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/alesha-pro/llm.asm" target="_blank">alesha-pro/llm.asm</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/68546545?v=4' alt=''>
+                        alesha-pro · 创建于 2026年11月25日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Qwen3-0.6B inference (12 KB), bare-metal bootable OS (22 KB), and from-scratch Mini-GPT trainer with live Braille TUI (32 KB) in 100% pure x86-64 NASM assembly. Zero C, zero libc, zero dependencies.</div>
+            <div class="topics"><span class="topic">assembly</span><span class="topic">avx2</span><span class="topic">bare-metal</span><span class="topic">llm</span><span class="topic">machine-learning</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,398</div>
+                <div class="meta-item lang">🟣 Assembly</div>
+                <div class="meta-item forks">🍴 368</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月27日</span>
+                <span>🔗 <a href="https://github.com/alesha-pro/llm.asm" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">7</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/os6/nospeaker" target="_blank">os6/nospeaker</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/239950?v=4' alt=''>
+                        os6 · 创建于 2026年11月22日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">make your macbook's trackpad talk using its haptic motor</div>
+            <div class="topics"><span class="topic">haptics</span><span class="topic">macos</span><span class="topic">swift</span><span class="topic">trackpad</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 2,000</div>
+                <div class="meta-item lang">🟣 Swift</div>
+                <div class="meta-item forks">🍴 109</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月24日</span>
+                <span>🔗 <a href="https://github.com/os6/nospeaker" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">8</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/Reukix/Reloc" target="_blank">Reukix/Reloc</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/120629904?v=4' alt=''>
+                        Reukix · 创建于 2026年11月25日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">iOS accessory-level location simulator over local loopback (iAP2 / MFi-v3 / NMEA)</div>
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,954</div>
+                <div class="meta-item lang">🟣 Swift</div>
+                <div class="meta-item forks">🍴 404</div>
+                <div class="meta-item license">📄 AGPL v3</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月28日</span>
+                <span>🔗 <a href="https://github.com/Reukix/Reloc" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">9</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/crhywun/g1-acq" target="_blank">crhywun/g1-acq</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/38809664?v=4' alt=''>
+                        crhywun · 创建于 2026年11月22日
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,829</div>
+                <div class="meta-item lang">🟣 JavaScript</div>
+                <div class="meta-item forks">🍴 418</div>
+                
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月26日</span>
+                <span>🔗 <a href="https://github.com/crhywun/g1-acq" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="repo">
+            <div class="repo-header">
+                <div class="rank">10</div>
+                <div class="repo-title">
+                    <div class="repo-name"><a href="https://github.com/Avaneesh-Inamdar/Stream-Tube-Desktop" target="_blank">Avaneesh-Inamdar/Stream-Tube-Desktop</a></div>
+                    <div class="repo-owner">
+                        <img src='https://avatars.githubusercontent.com/u/104128879?v=4' alt=''>
+                        Avaneesh-Inamdar · 创建于 2026年11月22日
+                    </div>
+                </div>
+            </div>
+            
+            <div class="repo-desc">Native YouTube client for Windows in Rust, with SponsorBlock, DeArrow and Return YouTube Dislike built in</div>
+            <div class="topics"><span class="topic">dearrow</span><span class="topic">desktop-app</span><span class="topic">gpui</span><span class="topic">mpv</span><span class="topic">rust</span></div>
+            <div class="repo-meta">
+                <div class="meta-item stars">⭐ 1,694</div>
+                <div class="meta-item lang">🟣 Rust</div>
+                <div class="meta-item forks">🍴 156</div>
+                <div class="meta-item license">📄 MIT 协议</div>
+            </div>
+            <div class="repo-footer">
+                <span>📝 最后更新于 2026年11月28日</span>
+                <span>🔗 <a href="https://github.com/Avaneesh-Inamdar/Stream-Tube-Desktop" target="_blank">查看仓库 →</a></span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📅 每日自动更新 · 由 GitHub Actions 生成 · 中文翻译由 AI 提供</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                生成时间：2026年11月28日 08:39:24 · 
+                <a href="https://github.com/gushuaialan1/github-daily-trending" target="_blank">GitHub 仓库</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
